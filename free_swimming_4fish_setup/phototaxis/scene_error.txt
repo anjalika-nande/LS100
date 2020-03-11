@@ -1,0 +1,6 @@
+[2020-02-26 11:13:57.724875] <class 'type'>: (<class 'FileNotFoundError'>, FileNotFoundError(2, 'No such file or directory'), <traceback object at 0x0000021895FD9508>)
+[2020-02-26 11:13:57.724875] <class 'type'>: (<class 'FileNotFoundError'>, FileNotFoundError(2, 'No such file or directory'), <traceback object at 0x0000021895FD9508>)
+[2020-02-26 11:17:27.159850] <class 'type'>: (<class 'FileNotFoundError'>, FileNotFoundError(2, 'No such file or directory'), <traceback object at 0x000001DF7ED3A2C8>)
+[2020-02-26 11:17:27.159850] <class 'type'>: (<class 'FileNotFoundError'>, FileNotFoundError(2, 'No such file or directory'), <traceback object at 0x000001DF7ED3A2C8>)
+[2020-02-26 11:18:08.407966] <class 'type'>: (<class 'FileNotFoundError'>, FileNotFoundError(2, 'No such file or directory'), <traceback object at 0x000001ACC5468448>)
+[2020-02-26 11:18:08.407966] <class 'type'>: (<class 'FileNotFoundError'>, FileNotFoundError(2, 'No such file or directory'), <traceback object at 0x000001ACC5468448>)
