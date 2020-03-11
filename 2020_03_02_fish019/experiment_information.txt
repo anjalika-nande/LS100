@@ -1,0 +1,7 @@
+Setup ID: 0 (NW152-beh-2)
+Fish Index: 0 (Upper left)
+Date and time: 2020-03-02_15-57-35
+
+fish_number: 19
+fish_age: 1
+fish_genotype: WT
