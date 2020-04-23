@@ -75,8 +75,9 @@ for indx, fish_no in enumerate(all_fish):
             data["bouts_start_stimulus_000"]["fish_position_y"], 'o', alpha = 0.5, color = cmap(colors[indx]), label= 'Fish %i'%fish_no)
             pl.xlim(-1,1)
             pl.ylim(-1,1)
-            pl.title(fish_type+' dark')
+            pl.title(fish_type+' control')
             pl.legend(custom_WT_dark,legend_WT_dark, bbox_to_anchor = (1.0,1.0))
+            pl.savefig('WTdark.png',bbox_inches='tight')
             
             # Histogram
             ibi = np.diff(data["bouts_start_stimulus_000"]["timestamp"])
@@ -85,7 +86,8 @@ for indx, fish_no in enumerate(all_fish):
             pl.figure(3, figsize = (8,6))
             pl.hist(heading_angle_change, alpha = 0.5, color = cmap(colors[indx]), label = 'Fish %i'%fish_no)
             pl.xlim(-180,180)
-            pl.title(fish_type+' dark')
+            pl.title(fish_type+' control')
+            pl.savefig('WTdarkhist.png',bbox_inches='tight')
             
     elif fish_type == 'Wild type' and fish_no in WT_stimuli:
         
@@ -102,6 +104,7 @@ for indx, fish_no in enumerate(all_fish):
             pl.ylim(-1,1)
             pl.title(fish_type+' stimuli')
             pl.legend(custom_WT_stimuli,legend_WT_stimuli, bbox_to_anchor = (1.0,1.0))
+            pl.savefig('WTstimulus.png',bbox_inches='tight')
             
             # Histogram
             ibi = np.diff(data["bouts_start_stimulus_000"]["timestamp"])
@@ -111,6 +114,7 @@ for indx, fish_no in enumerate(all_fish):
             pl.hist(heading_angle_change, alpha = 0.5, color = cmap(colors[indx]), label = 'Fish %i'%fish_no)
             pl.xlim(-180,180)
             pl.title(fish_type+' stimuli')
+            pl.savefig('WTstimulushist.png',bbox_inches='tight')
     else:
         # Mutant plots
         if fish_no in MT_dark:
@@ -126,17 +130,19 @@ for indx, fish_no in enumerate(all_fish):
                 data["bouts_start_stimulus_000"]["fish_position_y"], 'o', alpha = 0.5, color = cmap(colors[indx]))
                 pl.xlim(-1,1)
                 pl.ylim(-1,1)
-                pl.title(fish_type+' dark')
+                pl.title(fish_type+' control')
                 pl.legend(custom_mutant_dark,legend_mutant_dark)
+                pl.savefig('mutantdark.png',bbox_inches='tight')
                 
-            # Histogram
-            ibi = np.diff(data["bouts_start_stimulus_000"]["timestamp"])
-            heading_angle_change = data["bouts_end_stimulus_000"]["fish_accumulated_orientation"] - \
+                # Histogram
+                ibi = np.diff(data["bouts_start_stimulus_000"]["timestamp"])
+                heading_angle_change = data["bouts_end_stimulus_000"]["fish_accumulated_orientation"] - \
                        data["bouts_start_stimulus_000"]["fish_accumulated_orientation"]
-            pl.figure(7, figsize = (8,6))
-            pl.hist(heading_angle_change, alpha = 0.5, color = cmap(colors[indx]), label = 'Fish %i'%fish_no)
-            pl.xlim(-180,180)
-            pl.title(fish_type+' dark')
+                pl.figure(7, figsize = (8,6))
+                pl.hist(heading_angle_change, alpha = 0.5, color = cmap(colors[indx]), label = 'Fish %i'%fish_no)
+                pl.xlim(-180,180)
+                pl.title(fish_type+' control')
+                pl.savefig('mutantdarkhist.png',bbox_inches='tight')
             
         elif fish_no in MT_stimuli:
             
@@ -153,12 +159,14 @@ for indx, fish_no in enumerate(all_fish):
                 pl.ylim(-1,1)
                 pl.title(fish_type+' stimuli')
                 pl.legend(custom_mutant_stimuli,legend_mutant_stimuli)
-                
-            # Histogram
-            ibi = np.diff(data["bouts_start_stimulus_000"]["timestamp"])
-            heading_angle_change = data["bouts_end_stimulus_000"]["fish_accumulated_orientation"] - \
+                pl.savefig('mutantstimulus.png',bbox_inches='tight')
+                # Histogram
+                ibi = np.diff(data["bouts_start_stimulus_000"]["timestamp"])
+                heading_angle_change = data["bouts_end_stimulus_000"]["fish_accumulated_orientation"] - \
                        data["bouts_start_stimulus_000"]["fish_accumulated_orientation"]
-            pl.figure(9, figsize = (8,6))
-            pl.hist(heading_angle_change, alpha = 0.5, color = cmap(colors[indx]), label = 'Fish %i'%fish_no)
-            pl.xlim(-180,180)
-            pl.title(fish_type+' stimuli')
+                pl.figure(9, figsize = (8,6))
+                pl.hist(heading_angle_change, alpha = 0.5, color = cmap(colors[indx]), label = 'Fish %i'%fish_no)
+                pl.xlim(-180,180)
+                pl.title(fish_type+' stimuli')
+                pl.savefig('mutantstimulushist.png',bbox_inches='tight')
+      
