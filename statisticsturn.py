@@ -46,6 +46,11 @@ value_norm_WT_dark = []
 value_norm_WT_stimulus = []
 value_norm_MT_dark = []
 value_norm_MT_stimulus = []
+
+total_heading_WT_dark = []
+total_heading_WT_stimulus = []
+total_heading_MT_dark = []
+total_heading_MT_stimulus = []
 # Generate statistics about the fish trajectories
 for indx, fish_no in enumerate(all_fish):
     
@@ -82,6 +87,7 @@ for indx, fish_no in enumerate(all_fish):
                        data["bouts_start_stimulus_000"]["fish_accumulated_orientation"]
             heading_angle_all_trials.extend(heading_angle_change)
         heading_angle_all_trials = [i for i in heading_angle_all_trials if str(i) != 'nan']
+        total_heading_WT_dark.extend(heading_angle_all_trials)
         result_norm=so.fmin(likelihood_norm,[1,1],args=(heading_angle_all_trials,-1), full_output=True, disp=False)  
         value_norm_WT_dark.append(result_norm[0])
         plt.figure(1, figsize=(8,6))
@@ -104,6 +110,7 @@ for indx, fish_no in enumerate(all_fish):
                        data["bouts_start_stimulus_000"]["fish_accumulated_orientation"]
             heading_angle_all_trials.extend(heading_angle_change)
         heading_angle_all_trials = [i for i in heading_angle_all_trials if str(i) != 'nan'] 
+        total_heading_WT_stimulus.extend(heading_angle_all_trials)
         result_norm=so.fmin(likelihood_norm,[1,1],args=(heading_angle_all_trials,-1), full_output=True, disp=False)  
         value_norm_WT_stimulus.append(result_norm[0])
         
@@ -125,7 +132,8 @@ for indx, fish_no in enumerate(all_fish):
             heading_angle_change = data["bouts_end_stimulus_000"]["fish_accumulated_orientation"] - \
                        data["bouts_start_stimulus_000"]["fish_accumulated_orientation"]
             heading_angle_all_trials.extend(heading_angle_change)
-        heading_angle_all_trials = [i for i in heading_angle_all_trials if str(i) != 'nan']    
+        heading_angle_all_trials = [i for i in heading_angle_all_trials if str(i) != 'nan']  
+        total_heading_MT_dark.extend(heading_angle_all_trials)
         result_norm=so.fmin(likelihood_norm,[1,1],args=(heading_angle_all_trials,-1), full_output=True, disp=False)  
         value_norm_MT_dark.append(result_norm[0])
         plt.figure(3,figsize=(8,6))
@@ -147,6 +155,7 @@ for indx, fish_no in enumerate(all_fish):
                        data["bouts_start_stimulus_000"]["fish_accumulated_orientation"]
             heading_angle_all_trials.extend(heading_angle_change)
         heading_angle_all_trials = [i for i in heading_angle_all_trials if str(i) != 'nan']   
+        total_heading_MT_stimulus.extend(heading_angle_all_trials)
         result_norm=so.fmin(likelihood_norm,[1,1],args=(heading_angle_all_trials,-1), full_output=True, disp=False)  
         value_norm_MT_stimulus.append(result_norm[0])
         plt.figure(4,figsize=(8,6))
@@ -167,6 +176,20 @@ print('Mean angle of turns for the WT in the dark is %.2f with standard deviatio
 print('Mean angle of turns for the WT under stimulus is %.2f with standard deviation %.2f'%(WT_stimulus_avg[0],np.sqrt(WT_stimulus_avg[1])))
 print('Mean angle of turns for the MT in the dark is %.2f with standard deviation %.2f'%(MT_dark_avg[0],np.sqrt(MT_dark_avg[1])))
 print('Mean angle of turns for the MT under stimulus is %.2f with standard deviation %.2f'%(MT_stimulus_avg[0],np.sqrt(MT_stimulus_avg[1])))            
-            
+plt.figure(9, figsize=(8,6))
+plt.hist(np.abs(total_heading_WT_stimulus), density = 'True')
+plt.title('Aggregated absolute value of angle of turns for WT exposed to stimulus')
+
+plt.figure(10, figsize=(8,6))
+plt.hist(np.abs(total_heading_WT_dark), density = 'True')
+plt.title('Aggregated absolute value of angle of turns for WT control')
+
+plt.figure(11, figsize=(8,6))
+plt.hist(np.abs(total_heading_MT_stimulus), density = 'True')
+plt.title('Aggregated absolute value of angle of turns for MT exposed to stimulus')
+
+plt.figure(12, figsize=(8,6))
+plt.hist(np.abs(total_heading_MT_dark), density = 'True')
+plt.title('Aggregated absolute value of angle of turns for MT control')
             
 
