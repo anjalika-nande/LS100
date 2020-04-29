@@ -104,6 +104,7 @@ for indx, fish_no in enumerate(all_fish):
             data = pickle.load(f, encoding='latin1')
             f.close()
             x_position = [i for i in data["bouts_start_stimulus_000"]["fish_position_x"] if str(i) != 'nan']
+            print(len(x_position))
             y_position = [i for i in data["bouts_start_stimulus_000"]["fish_position_y"] if str(i) != 'nan']
             x_dist += sum([np.abs(x_position[i+1] - x_position[i]) for i in range(len(x_position)-1)])
             y_dist += sum([np.abs(y_position[i+1] - y_position[i]) for i in range(len(y_position)-1)])
@@ -139,10 +140,13 @@ avg_MT_dark_right = np.average(MT_dark_right)
 avg_MT_stimulus_right = np.average(MT_stimulus_right)
 
 print('WT in darkness on average spend %.2f fraction of the time on the right side of the dish'%avg_WT_dark_right)
+print('Std div :%.2f'%np.sqrt(np.var(WT_dark_right)))
 print('WT exposed to stimulus on average spend %.2f fraction of the time on the right side of the dish'%avg_WT_stimulus_right)
-
+print('Std div :%.2f'%np.sqrt(np.var(WT_stimulus_right)))
 print('MT in darkness on average spend %.2f fraction of the time on the right side of the dish'%avg_MT_dark_right)
+print('Std div :%.2f'%np.sqrt(np.var(MT_dark_right)))
 print('MT exposed to stimulus on average spend %.2f fraction of the time on the right side of the dish'%avg_MT_stimulus_right)
+print('Std div :%.2f'%np.sqrt(np.var(MT_stimulus_right)))
             
 # Average dist covered by WT and MT. Figure out the units!!!!
 avg_WT_dark_dist = np.sqrt(np.average(WT_dark_x)**2 + np.average(WT_dark_y)**2)
