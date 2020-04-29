@@ -1,9 +1,11 @@
 import os
 import pickle
 import numpy as np
+import matplotlib as mpl
 import scipy.stats as ss
 import scipy.optimize as so
 import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
 
 def likelihood_norm(para,x,neg=-1):
     L=(-len(x)*np.log(2*np.pi)/2)-(len(x)*np.log(para[1]**2)/2)-1/2*(sum((x-para[0])**2/para[1]**2))
@@ -14,8 +16,21 @@ WT_dark = [19, 21, 23, 29, 31]
 WT_stimuli = [20, 22, 24, 30, 32]
 MT_dark = [33, 37]
 MT_stimuli = [34, 38]
-
 all_fish = WT_dark + WT_stimuli + MT_dark + MT_stimuli
+# Creating a color map and defining legends
+cmap = mpl.cm.hsv
+colors = np.arange(0, len(all_fish)+1,1)*20
+
+custom_WT_dark = [Line2D([0], [0], color=cmap(colors[0]), lw=4), Line2D([0], [0], color=cmap(colors[1]), lw=4),
+             Line2D([0], [0], color=cmap(colors[2]), lw=4), Line2D([0], [0], color=cmap(colors[3]), lw=4),
+             Line2D([0], [0], color=cmap(colors[4]), lw=4)]
+custom_WT_stimuli = [Line2D([0], [0], color=cmap(colors[5]), lw=4),
+             Line2D([0], [0], color=cmap(colors[6]), lw=4), Line2D([0], [0], color=cmap(colors[7]), lw=4),
+             Line2D([0], [0], color=cmap(colors[8]), lw=4), Line2D([0], [0], color=cmap(colors[9]), lw=4)]
+
+custom_mutant_dark = [Line2D([0], [0], color=cmap(colors[10]), lw=4), Line2D([0], [0], color=cmap(colors[11]), lw=4)]
+custom_mutant_stimuli = [Line2D([0], [0], color=cmap(colors[12]), lw=4), Line2D([0], [0], color=cmap(colors[13]), lw=4)]
+
 dates = ['2020_03_02_fish0', '2020_03_04_fish0','2020_03_06_fish0','2020_03_09_fish0']
          
 # Define file root path
@@ -69,10 +84,12 @@ for indx, fish_no in enumerate(all_fish):
         heading_angle_all_trials = [i for i in heading_angle_all_trials if str(i) != 'nan']
         result_norm=so.fmin(likelihood_norm,[1,1],args=(heading_angle_all_trials,-1), full_output=True, disp=False)  
         value_norm_WT_dark.append(result_norm[0])
-        #plt.hist(heading_angle_all_trials, density = True)
-        plt.figure(1)
-        plt.plot(np.arange(-150,151,1),ss.norm.pdf(np.arange(-150,151,1),loc=result_norm[0][0],scale=result_norm[0][1]))
+        plt.figure(1, figsize=(8,6))
+        plt.plot(np.arange(-150,151,1),ss.norm.pdf(np.arange(-150,151,1),loc=result_norm[0][0],scale=result_norm[0][1]),color = cmap(colors[indx]))
         plt.title('MLE results for WT fish in the dark')
+        #plt.savefig('WTdarkMLE.png',bbox_inches='tight')
+        plt.figure(5,figsize=(8,6))
+        plt.hist(np.abs(heading_angle_all_trials), density='True',color = cmap(colors[indx]), alpha = 0.5)
         WT_dark_angle.append([np.average(heading_angle_all_trials), np.var(heading_angle_all_trials)])
         
     
@@ -89,9 +106,13 @@ for indx, fish_no in enumerate(all_fish):
         heading_angle_all_trials = [i for i in heading_angle_all_trials if str(i) != 'nan'] 
         result_norm=so.fmin(likelihood_norm,[1,1],args=(heading_angle_all_trials,-1), full_output=True, disp=False)  
         value_norm_WT_stimulus.append(result_norm[0])
-        plt.figure(2)
-        plt.plot(np.arange(-150,151,1),ss.norm.pdf(np.arange(-150,151,1),loc=result_norm[0][0],scale=result_norm[0][1]))
+        
+        plt.figure(2,figsize=(8,6))
+        plt.plot(np.arange(-150,151,1),ss.norm.pdf(np.arange(-150,151,1),loc=result_norm[0][0],scale=result_norm[0][1]),color = cmap(colors[indx]))
         plt.title('MLE results for WT fish exposed to stimulus')
+        #plt.savefig('WTstimulusMLE.png',bbox_inches='tight')
+        plt.figure(6,figsize=(8,6))
+        plt.hist(np.abs(heading_angle_all_trials), density='True',color = cmap(colors[indx]), alpha = 0.5)
         WT_stimulus_angle.append([np.average(heading_angle_all_trials), np.var(heading_angle_all_trials)])
         
     elif fish_type == 'Mutant' and fish_no in MT_dark:
@@ -107,9 +128,12 @@ for indx, fish_no in enumerate(all_fish):
         heading_angle_all_trials = [i for i in heading_angle_all_trials if str(i) != 'nan']    
         result_norm=so.fmin(likelihood_norm,[1,1],args=(heading_angle_all_trials,-1), full_output=True, disp=False)  
         value_norm_MT_dark.append(result_norm[0])
-        plt.figure(3)
-        plt.plot(np.arange(-150,151,1),ss.norm.pdf(np.arange(-150,151,1),loc=result_norm[0][0],scale=result_norm[0][1]))
+        plt.figure(3,figsize=(8,6))
+        plt.plot(np.arange(-150,151,1),ss.norm.pdf(np.arange(-150,151,1),loc=result_norm[0][0],scale=result_norm[0][1]),color = cmap(colors[indx]))
         plt.title('MLE results for MT fish in darkness')
+        #plt.savefig('MTdarkMLE.png',bbox_inches='tight')
+        plt.figure(7,figsize=(8,6))
+        plt.hist(np.abs(heading_angle_all_trials), density='True',color = cmap(colors[indx]), alpha = 0.5)
         MT_dark_angle.append([np.average(heading_angle_all_trials), np.var(heading_angle_all_trials)])
         
     elif fish_type == 'Mutant' and fish_no in MT_stimuli:
@@ -125,9 +149,12 @@ for indx, fish_no in enumerate(all_fish):
         heading_angle_all_trials = [i for i in heading_angle_all_trials if str(i) != 'nan']   
         result_norm=so.fmin(likelihood_norm,[1,1],args=(heading_angle_all_trials,-1), full_output=True, disp=False)  
         value_norm_MT_stimulus.append(result_norm[0])
-        plt.figure(4)
-        plt.plot(np.arange(-150,151,1),ss.norm.pdf(np.arange(-150,151,1),loc=result_norm[0][0],scale=result_norm[0][1]))
+        plt.figure(4,figsize=(8,6))
+        plt.plot(np.arange(-150,151,1),ss.norm.pdf(np.arange(-150,151,1),loc=result_norm[0][0],scale=result_norm[0][1]),color = cmap(colors[indx]))
         plt.title('MLE results for MT fish exposed to stimulus')
+        #plt.savefig('MTstimulusMLE.png',bbox_inches='tight')
+        plt.figure(8,figsize=(8,6))
+        plt.hist(np.abs(heading_angle_all_trials), density='True',color = cmap(colors[indx]), alpha = 0.5)
         MT_stimulus_angle.append([np.average(heading_angle_all_trials), np.var(heading_angle_all_trials)])
 
 # Average mean and variance
